@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/nombreContacto"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="23dp"
+        tools:text="Nombre del contacto"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginStart="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp" />
+    <CheckBox
+        android:id="@+id/checkBoxContacto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_alignTop="@+id/nombreContacto"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/telefonoContacto"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:textSize="16sp"
+        tools:text="Telefono del contacto"
+        android:layout_below="@+id/nombreContacto"
+        android:layout_alignLeft="@+id/nombreContacto"
+        android:layout_alignStart="@+id/nombreContacto" />
+
+
+</RelativeLayout>

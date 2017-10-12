@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.unam.mobile.misavisos.Activities.ConfiguracionActivity"
+    android:background="@color/greyColor">
+
+
+    <EditText
+        android:id="@+id/msj_personal"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_margin="15dp"
+        android:hint="@string/introduceMsj"
+        android:maxLength="65"
+        android:maxLines="5"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/btn_guardarTexto"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/save" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Guardar Mensaje"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/btn_agregar_contactos"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/contacts"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Seleccionar Contactos"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"/>
+
+</LinearLayout>
