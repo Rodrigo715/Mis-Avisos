@@ -1,6 +1,7 @@
 package com.unam.mobile.misavisos.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akhgupta.easylocation.EasyLocationAppCompatActivity;
@@ -16,6 +19,8 @@ import com.akhgupta.easylocation.EasyLocationRequestBuilder;
 import com.google.android.gms.location.LocationRequest;
 import com.unam.mobile.misavisos.R;
 import com.unam.mobile.misavisos.UtilsClass;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,12 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
     ImageButton sendLocation;
     @BindView(R.id.btn_911)
     ImageButton btn_911;
+    @BindView(R.id.tv_msjEnviado)
+    TextView msjEnviado;
+    @BindView(R.id.progressBarLoc)
+    ProgressBar progressBar;
+
+
 
     @BindView(android.R.id.content)
     View parentLayout;
@@ -40,6 +51,7 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
     List<String> telefonosContactos = new ArrayList<>();
     private String textoFinal;
 
+    private static final String CADENA_ENVIADA = "cadenaEnviada";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,10 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
         setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+             msjEnviado.setText(intent.getStringExtra(CADENA_ENVIADA));
+        }
 
         sendLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +79,7 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
     }
 
     private void sendLocation() {
+        progressBar.setVisibility(View.VISIBLE);
         LocationRequest locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(5000)
@@ -82,6 +99,7 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
 
     @Override
     public void onLocationPermissionDenied() {
+        progressBar.setVisibility(View.GONE);
         Snackbar.make(parentLayout, getString(R.string.permLocation), Snackbar.LENGTH_SHORT).show();
     }
 
@@ -100,6 +118,7 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
             for (int i = 0; i < telefonosContactos.size(); i++) {
                 UtilsClass.sendSms(telefonosContactos.get(i), textoFinal, this);
             }
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(this, getString(R.string.locaizacionEnviada), Toast.LENGTH_SHORT).show();
         }
     }
@@ -110,6 +129,7 @@ public class LocationActivity extends EasyLocationAppCompatActivity {
 
     @Override
     public void onLocationProviderDisabled() {
+        progressBar.setVisibility(View.GONE);
         Snackbar.make(parentLayout, getString(R.string.habilitLocation), Snackbar.LENGTH_SHORT).show();
     }
 

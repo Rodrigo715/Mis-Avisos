@@ -3,18 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.unam.mobile.misavisos.Fragments.DondeEstas"
-    >
+    tools:context="com.unam.mobile.misavisos.Fragments.DondeEstas">
 
 
     <ImageView
         android:id="@+id/tv_pregunta"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
         android:src="@drawable/dondeestas" />
 
 
@@ -24,16 +23,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@android:color/white"
-        android:hint="Introduce el texto personalizado"
+        android:hint="@string/introduceMsj"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLength="22"
+        android:maxLines="1"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="15sp"
-        android:visibility="gone"
-        android:maxLength="25"
-        android:maxLines="1"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        />
+        android:visibility="gone" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

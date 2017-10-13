@@ -64,13 +64,10 @@ public class AdaptadorContacto extends BaseAdapter {
                 try{
                     if(contactoList.get(pos).getSelected()==true){
                         contactoList.get(pos).setSelected(false);
-                        //Log.d("Estado","Quitaste seleción de "+contactoList.get(pos).getNombre());
                     }else{
                         contactoList.get(pos).setSelected(true);
-                        //Log.d("Estado","Selecionaste a "+contactoList.get(pos).getNombre());
                     }
                 }catch (NullPointerException ex){
-                    //Log.d("Estado Exception",contactoList.get(position).getNombre());
                 }
             }
         });

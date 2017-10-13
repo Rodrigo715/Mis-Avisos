@@ -18,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         EnCuantoPueda.EnCuantoPuedaSelected,
         View.OnClickListener {
 
+    private static final String CADENA_ENVIADA = "cadenaEnviada";
 
     @BindView(R.id.tv_cadena_formada)
     TextView cadenaFormada;
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity
 
 
     public void setFirstFragment() {
+        btn_911.setVisibility(View.VISIBLE);
         num_pregunta = 0;
         cadenaFormada.setText("");
         fragmentManager = getSupportFragmentManager();
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.pregunta_container, dondeEstas)
                 .addToBackStack(null)
                 .commit();
+        btn_911.setVisibility(View.GONE);
         barra.setImageResource(R.drawable.barra2);
         num_pregunta = 1;
     }
@@ -221,7 +223,6 @@ public class MainActivity extends AppCompatActivity
         cadenaFormada.append(textoEnCuantoPueda);
         //Enviar SMS
         sendSMS(cadenaFormada.getText().toString());
-        //Log.e("Cadena",cadenaFormada.getText().toString());
     }
 
 
@@ -239,10 +240,10 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, getString(R.string.mensajeEnviado), Toast.LENGTH_SHORT).show();
                 num_pregunta = 3;
                 Intent intent = new Intent(this, LocationActivity.class);
+                intent.putExtra(CADENA_ENVIADA,mensaje);
                 startActivity(intent);
             }
         }
-        //setFirstFragment();
     }
 
 
@@ -292,29 +293,21 @@ public class MainActivity extends AppCompatActivity
                     for (int i = 0; i < permissions.length; i++) {
                         perms.put(permissions[i], grantResults[i]);
                     }
-
                     if (perms.get(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                        //Log.e("SMSSE", "Concedido");
+
                     } else {
-                        //Log.e("SMSSE", "NO Concedido");
                     }
 
                     if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        //Log.e("LOCATION", "Concedido");
+
                     } else {
-                        //   Log.e("LOCATION", "NO Concedido");
+
                     }
 
-                    /*if (perms.get(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                        // Log.e("CALL", "Concedido");
-                    } else {
-                        //Log.e("CALL", "NO Concedido");
-                    }*/
 
                     if (perms.get(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                        //Log.e("CONTACT", "Concedido");
+
                     } else {
-                        //Log.e("CONTACT", "NO Concedido");
                     }
                 }
             }
@@ -347,11 +340,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.mis_contactos_item) {
-            Intent intent = new Intent(MainActivity.this, ListaContactosActivity.class);
-            startActivity(intent);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(parentLayout,getString(R.string.permCont), Snackbar.LENGTH_SHORT ).show();
+            } else {
+                Intent intent = new Intent(MainActivity.this, ListaContactosActivity.class);
+                startActivity(intent);
+            }
             return true;
         } else if (id == R.id.medidas_seguridad) {
-
+            Toast.makeText(this, getString(R.string.enDesarrollo), Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -375,6 +372,7 @@ public class MainActivity extends AppCompatActivity
             if (num_pregunta == 1) {
                 newTextMessage = texto.replace(textoComoEstas, "");
                 barra.setImageResource(R.drawable.barra1);
+                btn_911.setVisibility(View.VISIBLE);
             } else if (num_pregunta == 2) {
                 newTextMessage = texto.replace(textoDondeEstas, "");
                 barra.setImageResource(R.drawable.barra2);

@@ -32,17 +32,10 @@ public class UtilsClass {
 
         sentPI=PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0 );
         smsManager.sendTextMessage(numero, null, mensaje, sentPI, null);
-        //smsManager.sendTextMessage(numero, null, mensaje, null, null);
-
-        Log.e("Cadena",mensaje);
-        Log.e("Long",String.valueOf(mensaje.length()));
-        Log.e("Mensaje","enviado");
     }
 
     public static void makePhoneCall(Context context) {
         String number = "911";
-        //Intent intent = new Intent(Intent.ACTION_CALL);
-        // Intent.ACTION_DIAL no requiere permission.CALL_PHONE
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
         context.startActivity(intent);
@@ -59,7 +52,6 @@ public class UtilsClass {
                 JSONObject contacto = jsonArray.getJSONObject(i);
                 String telefono = contacto.getString("telefono");
                 telefonosContactos.add(telefono);
-                //Log.d("Telefono agregado",telefono);
             }
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -72,7 +64,6 @@ public class UtilsClass {
     private static String recuperaContactos(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         jsonContactos = preferences.getString("lista", "vacio");
-        //Log.d("Contactos",jsonContactos);
         return jsonContactos;
     }
 

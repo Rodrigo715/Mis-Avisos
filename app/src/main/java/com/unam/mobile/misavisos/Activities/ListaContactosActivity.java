@@ -41,8 +41,7 @@ public class ListaContactosActivity extends AppCompatActivity {
 
     @BindView(R.id.contactsList)
     ListView listaContactos;
-    @BindView(R.id.botonGuardar)
-    ImageButton botonGuardar;
+
 
     public List<Contacto> contactosGuardados = new ArrayList<>();
     public List<Contacto> telefonosContactos= new ArrayList<>();
@@ -63,13 +62,6 @@ public class ListaContactosActivity extends AppCompatActivity {
         listaContactos.setAdapter(adaptadorContacto);
         intent = new Intent(ListaContactosActivity.this,MainActivity.class);
         obtenerContactos();
-        botonGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Log.d("Estado","Guardar contactos");
-                guardarContactos();
-            }
-        });
     }
 
 
@@ -80,7 +72,6 @@ public class ListaContactosActivity extends AppCompatActivity {
         String orden= ContactsContract.Data.DISPLAY_NAME+" ASC";
         contactos=recuperaContactos(this);
         if(contactos.equals("vacio")){
-            //Log.d("Estado", "Vacio");
             contactoCursor=getContentResolver().query(ContactsContract.Data.CONTENT_URI,projection,where,null,orden);
             while (contactoCursor.moveToNext()){
                 try {
@@ -133,7 +124,6 @@ public class ListaContactosActivity extends AppCompatActivity {
         for(int i=0; i<AdaptadorContacto.contactoList.size();i++){
             if(AdaptadorContacto.contactoList.get(i).getSelected()){
                 contactosGuardados.add(contactoList.get(i));
-                //Log.d("Contacto guardado",contactoList.get(i).getNombre());
             }
         }
         gson= new GsonBuilder().setPrettyPrinting().create();
@@ -156,12 +146,12 @@ public class ListaContactosActivity extends AppCompatActivity {
         SharedPreferences preferences=getPreferences(MODE_PRIVATE);
         boolean isFirst=preferences.getBoolean("isFirst",false);
         if(isFirst==false){
-           // Log.d("Estado","Es la primera vez");
+
             SharedPreferences.Editor editor=preferences.edit();
             editor.putBoolean("isFirst",true);
             editor.commit();
         }else {
-            //Log.d("Estado","No es la primera vez");
+
             Intent intent= new Intent(ListaContactosActivity.this,MainActivity.class);
             //Banderas necesarias para no regresar a la activity de Seleccionar y guardar contactos
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -173,7 +163,7 @@ public class ListaContactosActivity extends AppCompatActivity {
         String jsonContactos;
         preferences= PreferenceManager.getDefaultSharedPreferences(context);
         jsonContactos=preferences.getString("lista","vacio");
-        //Log.d("Contactos",jsonContactos);
+
         return jsonContactos;
     }
 
@@ -185,5 +175,11 @@ public class ListaContactosActivity extends AppCompatActivity {
                 guardarContactos();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        guardarContactos();
+        super.onBackPressed();
     }
 }

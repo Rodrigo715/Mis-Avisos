@@ -4,7 +4,6 @@ package com.unam.mobile.misavisos.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unam.mobile.misavisos.R;
 
@@ -110,8 +110,12 @@ public class DondeEstas extends Fragment implements View.OnClickListener{
                     if(actionId== EditorInfo.IME_ACTION_DONE){
                         imm.hideSoftInputFromWindow(v.getWindowToken(),
                                 InputMethodManager.HIDE_NOT_ALWAYS);
-                        textoPersonal.setVisibility(View.GONE);
-                        mCallback.dondeEstasSelected(R.id.btn_personal,textoPersonal.getText().toString()+".\n");
+                        if(textoPersonal.getText().length()==0){
+                            Toast.makeText(getActivity().getApplicationContext(),getString(R.string.introduceMsj),Toast.LENGTH_SHORT).show();
+                        }else{
+                            textoPersonal.setVisibility(View.GONE);
+                            mCallback.dondeEstasSelected(R.id.btn_personal,textoPersonal.getText().toString()+".\n");
+                        }
                         return true;
                     }
                     return false;
